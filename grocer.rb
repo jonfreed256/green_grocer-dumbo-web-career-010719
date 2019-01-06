@@ -18,19 +18,21 @@ def consolidate_cart(cart)		# returns {"AVOCADO" => {:price => 3.0, :clearance =
 end
 
 def apply_coupons(cart, coupons)	# Returns: {"AVOCADO" => {:price => 3.0, :clearance => true, :count => 1}, 
-									# Coupons = [{:item => "AVOCADO", :num => 2, :cost => 5.0}]
-	cart.each do |item, item_info_hash|
+							# Coupons = [{:item => "AVOCADO", :num => 2, :cost => 5.0}]
+	cart.clone.each do |item, item_info_hash|
 	# {"AVOCADO" => {:price => 3.0, :clearance => true, :count => 3},...}
 		item_info_hash.each do |pr_cl_ct_keys, pr_cl_ct_values|
 		# {:price => 3.0, :clearance => true, :count => 3}
 			if cart.keys.include?(item) && cart[item][:count] == coupons[0][:num]
-			item << " W/ COUPON"
-			elsif cart.keys.include?(item)
+			cart["#{item} W/COUPON"] = item_info_hash
+			# binding.pry
 
 			end
 # binding.pry
 		end
 	end
+	cart
+	binding.pry
 end
 
 def apply_clearance(cart)
